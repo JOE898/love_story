@@ -1,0 +1,469 @@
+/* ============================================================
+   我们的 999 天 · 恋爱纪念册
+   浪漫粉紫 · 手机竖屏全屏滑动
+   ============================================================ */
+
+/* ---------- 色板与全局变量 ---------- */
+:root {
+  --pink: #ff9ec7;
+  --purple: #b388ff;
+  --deep: #2e1b3f;      /* 深梅紫 */
+  --accent: #ffc2dd;
+  --grad: linear-gradient(135deg, #ff9ec7 0%, #c79bff 55%, #8f7bff 100%);
+  /* 底部深、向上变浅的遮罩（保证文字清晰） */
+  --overlay: linear-gradient(
+    to top,
+    rgba(30, 12, 42, 0.88) 0%,
+    rgba(46, 27, 63, 0.62) 34%,
+    rgba(46, 27, 63, 0.28) 62%,
+    rgba(46, 27, 63, 0.06) 100%
+  );
+  --font-kai: "LXGW WenKai Screen", "Kaiti SC", "STKaiti", "KaiTi", serif;
+  --font-num: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* ---------- 基础重置 ---------- */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;   /* 一屏一屏吸附滑动 */
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-kai);
+  color: #fff;
+  background: var(--deep);
+  line-height: 1.9;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { display: block; max-width: 100%; }
+
+/* ============================================================
+   加载动效
+   ============================================================ */
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  background: linear-gradient(160deg, #3a2150 0%, #2e1b3f 100%);
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+.loader.is-done {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.loader-heart {
+  font-size: 42px;
+  color: var(--pink);
+  animation: loader-beat 1.2s ease-in-out infinite;
+  text-shadow: 0 0 24px rgba(255, 158, 199, 0.65);
+}
+.loader-text {
+  font-size: 14px;
+  letter-spacing: 0.22em;
+  color: rgba(255, 255, 255, 0.62);
+}
+@keyframes loader-beat {
+  0%, 100% { transform: scale(1); }
+  30% { transform: scale(1.28); }
+  60% { transform: scale(0.94); }
+}
+
+/* fetch 失败提示卡 */
+.error-card {
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: var(--deep);
+}
+.error-card .card {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 194, 221, 0.35);
+  border-radius: 18px;
+  padding: 40px 34px;
+  max-width: 320px;
+  width: 100%;
+}
+.error-card .card p { font-size: 16px; margin-bottom: 22px; color: rgba(255,255,255,0.9); }
+.error-card .retry {
+  font-family: inherit;
+  font-size: 15px;
+  color: #fff;
+  background: var(--grad);
+  border: none;
+  border-radius: 999px;
+  padding: 10px 34px;
+  cursor: pointer;
+  letter-spacing: 0.1em;
+}
+.error-card .retry:active { transform: scale(0.96); }
+
+/* ============================================================
+   屏（section）结构：背景图 + 遮罩 + 内容块
+   ============================================================ */
+.screen {
+  position: relative;
+  height: 100vh;               /* 老浏览器回退 */
+  height: 100dvh;              /* 移动端动态视口 */
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;   /* 内容块靠下 */
+  isolation: isolate;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;    /* 快速滑动也不跳屏，一屏一屏翻 */
+}
+
+/* 背景图：Ken Burns 慢速呼吸缩放 */
+.screen .bg {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: kenburns 18s ease-in-out infinite alternate;
+  will-change: transform;
+}
+@keyframes kenburns {
+  from { transform: scale(1) translateY(0); }
+  to   { transform: scale(1.12) translateY(-1.5%); }
+}
+
+/* 深梅紫渐变遮罩 */
+.screen .shade {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--overlay);
+}
+
+/* ---------- 内容块 ---------- */
+.content {
+  position: relative;
+  width: 100%;
+  max-width: 620px;            /* 桌面居中限宽 */
+  margin: 0 auto;
+  padding: 0 28px;
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 44px);
+  text-align: center;
+}
+
+/* 屏内右下角页码 */
+.page-num {
+  position: absolute;
+  right: calc(env(safe-area-inset-right, 0px) + 18px);
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 16px);
+  z-index: 2;
+  font-family: var(--font-num);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: rgba(255, 255, 255, 0.55);
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+}
+
+/* ============================================================
+   Hero（第 1 屏）
+   ============================================================ */
+.screen--hero {
+  justify-content: center;     /* hero 内容垂直居中 */
+}
+.screen--hero .content {
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 96px);
+}
+
+.badge {
+  display: inline-block;
+  font-size: 13px;
+  letter-spacing: 0.3em;
+  padding: 6px 18px 6px 22px;  /* 左多右少：补偿字距 */
+  border: 1px solid rgba(255, 194, 221, 0.55);
+  border-radius: 999px;
+  color: var(--accent);
+  background: rgba(46, 27, 63, 0.32);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  margin-bottom: 22px;
+}
+
+.big-number {
+  font-family: var(--font-num);
+  font-weight: 800;
+  font-size: clamp(96px, 32vw, 220px);
+  line-height: 1.05;
+  letter-spacing: 0.02em;
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: var(--pink);          /* 不支持 clip 时的回退色 */
+  /* 柔和粉紫光晕 */
+  filter: drop-shadow(0 0 26px rgba(255, 158, 199, 0.55))
+          drop-shadow(0 0 60px rgba(179, 136, 255, 0.35));
+}
+
+.hero-title {
+  font-size: clamp(26px, 7.2vw, 40px);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin-top: 14px;
+  text-shadow: 0 2px 18px rgba(30, 12, 42, 0.55);
+}
+
+.hero-subtitle {
+  font-size: clamp(15px, 4.2vw, 18px);
+  color: rgba(255, 255, 255, 0.86);
+  letter-spacing: 0.14em;
+  margin-top: 12px;
+  text-shadow: 0 1px 12px rgba(30, 12, 42, 0.5);
+}
+
+/* ---------- 下滑提示 ---------- */
+.scroll-hint {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 22px);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  color: rgba(255, 255, 255, 0.72);
+  text-decoration: none;
+}
+.scroll-hint .arrow {
+  font-size: 17px;
+  line-height: 1;
+  animation: hint-bounce 1.8s ease-in-out infinite;
+}
+@keyframes hint-bounce {
+  0%, 100% { transform: translateY(0); opacity: 0.65; }
+  50% { transform: translateY(9px); opacity: 1; }
+}
+
+/* ---------- Hero 浮动爱心层 ---------- */
+.hearts {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+}
+.hearts .heart {
+  position: absolute;
+  bottom: -8vh;
+  color: var(--accent);
+  text-shadow: 0 0 12px rgba(255, 158, 199, 0.6);
+  animation-name: float-up;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform, opacity;
+}
+@keyframes float-up {
+  0% {
+    transform: translate(0, 0) rotate(-8deg);
+    opacity: 0;
+  }
+  10% { opacity: 0.9; }
+  25% { transform: translate(14px, -28vh) rotate(10deg); }
+  50% {
+    transform: translate(-12px, -55vh) rotate(-10deg);
+    opacity: 0.75;
+  }
+  75% { transform: translate(12px, -82vh) rotate(8deg); }
+  95% { opacity: 0.35; }
+  100% {
+    transform: translate(0, -112vh) rotate(-6deg);
+    opacity: 0;
+  }
+}
+
+/* ============================================================
+   故事屏（type=story）
+   ============================================================ */
+.story-date {
+  display: inline-block;
+  font-family: var(--font-num);
+  font-size: 13px;
+  letter-spacing: 0.26em;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+.screen-title {
+  font-size: clamp(24px, 6.4vw, 36px);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-shadow: 0 2px 16px rgba(30, 12, 42, 0.55);
+  margin-bottom: 14px;
+}
+
+.screen-text {
+  font-size: 16px;             /* 正文 16~17px，行高 1.9 继承 body */
+  color: rgba(255, 255, 255, 0.92);
+  letter-spacing: 0.06em;
+  text-shadow: 0 1px 10px rgba(30, 12, 42, 0.5);
+}
+
+/* ============================================================
+   计数屏（type=counter）
+   ============================================================ */
+.counter-line {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 6px;
+}
+.counter-number {
+  font-family: var(--font-num);
+  font-weight: 700;
+  font-size: clamp(72px, 24vw, 170px);
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: var(--purple);        /* 回退色 */
+  filter: drop-shadow(0 0 22px rgba(179, 136, 255, 0.45));
+}
+.counter-unit {
+  /* 后缀「天」小一号，同样渐变填充 */
+  font-size: clamp(30px, 9vw, 62px);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: var(--accent);
+}
+
+.counter-today {
+  font-family: var(--font-num);
+  font-size: 13px;
+  letter-spacing: 0.22em;
+  color: rgba(255, 255, 255, 0.68);
+  margin-top: 14px;
+}
+
+.counter-forever {
+  font-size: 14px;
+  letter-spacing: 0.34em;
+  color: var(--accent);
+  margin-top: 10px;
+  padding-left: 0.34em;        /* 补偿字距保持视觉居中 */
+}
+
+/* ============================================================
+   Footer（最后一屏底部小字）
+   ============================================================ */
+.footer-note {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 8px);
+  z-index: 2;
+  text-align: center;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: rgba(255, 255, 255, 0.42);  /* 半透明 */
+  pointer-events: none;
+}
+
+/* ============================================================
+   圆点导航（右侧垂直居中）
+   ============================================================ */
+.dot-nav {
+  position: fixed;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.dot-nav button {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.5);
+  transition: height 0.35s ease, background 0.35s ease;
+}
+.dot-nav button.active {
+  height: 18px;                /* 当前屏：粉紫胶囊 */
+  background: var(--grad);
+}
+
+/* ============================================================
+   进场动效（IntersectionObserver 添加 .is-in 后显现）
+   ============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+.reveal.is-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+/* 同屏内依次阶梯延迟 */
+.reveal.d1 { transition-delay: 0.15s; }
+.reveal.d2 { transition-delay: 0.3s; }
+.reveal.d3 { transition-delay: 0.45s; }
+
+/* ============================================================
+   桌面端微调
+   ============================================================ */
+@media (min-width: 768px) {
+  .content { padding: 0 24px; padding-bottom: 64px; }
+  .screen-text { font-size: 17px; }
+  .dot-nav { right: 22px; }
+}
+
+/* ============================================================
+   减少动态效果：关闭所有动画
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .screen .bg,
+  .loader-heart,
+  .scroll-hint .arrow,
+  .hearts .heart {
+    animation: none !important;
+  }
+  .hearts { display: none; }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .dot-nav button { transition: none; }
+}
