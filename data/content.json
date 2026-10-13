@@ -66,12 +66,28 @@
       "image": "images/u20261013-155821-1sbh.jpg"
     },
     {
+      "id": "page-1791878859751",
+      "type": "story",
+      "date": "2025.4.6",
+      "title": "婺源",
+      "text": "看到漫山遍野的油菜花，你在闹，我在笑",
+      "image": "images/u20261013-161228-9fxa.jpg"
+    },
+    {
       "id": "page-1791878234788",
       "type": "story",
       "date": "2025.6.13",
       "title": "第一次去看草原",
       "text": "来到夏天的呼市，留下我们爱的故事",
       "image": "images/u20261013-155856-ffgw.jpg"
+    },
+    {
+      "id": "page-1791878857369",
+      "type": "story",
+      "date": "2025.6.15",
+      "title": "北京",
+      "text": "给宝贝拍了很满意的照片",
+      "image": "images/u20261013-160901-u1au.jpg"
     },
     {
       "id": "page-1791878342401",
@@ -82,12 +98,28 @@
       "image": "images/u20261013-160014-iw0g.jpg"
     },
     {
+      "id": "page-1791878858399",
+      "type": "story",
+      "date": "2026.6.28",
+      "title": "西安",
+      "text": "天气很热，但是宝贝一点没有责怪我安排不好，幸福就是享受在一起的每一刻",
+      "image": "images/u20261013-160955-5sn3.jpg"
+    },
+    {
+      "id": "page-1791878860727",
+      "type": "story",
+      "date": "2026.8.1",
+      "title": "南京",
+      "text": "6:30起来为了不买明孝陵门票，疯狂赶路到头晕，还做了妆造在瞻园拍照",
+      "image": "images/u20261013-161109-q13a.jpg"
+    },
+    {
       "id": "future",
       "type": "story",
       "date": "",
       "title": "",
       "text": "999 天只是一个小小的开始。下一个 999 天，第 1999 天，第 2999 天……依然是你，只好是你，必须是你。",
-      "image": "images/p7.jpg"
+      "image": "images/u20261013-161137-ewma.jpg"
     },
     {
       "id": "counter",
@@ -95,7 +127,7 @@
       "date": "",
       "title": "未完待续",
       "text": "我们的故事每天都在更新。今天，是我们在一起的第——",
-      "image": "images/p8.jpg"
+      "image": "images/u20261013-161354-ja9p.jpg"
     }
   ],
   "footer": "❤ 2024.01.19 起 · 每一天都算数（测试）"
