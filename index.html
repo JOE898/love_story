@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <!-- 手机竖屏优先；viewport-fit=cover 配合 safe-area-inset 使用 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#ff9ec7">
+  <meta name="robots" content="noindex">
+  <title>我们的 999 天</title>
+  <!-- 霞鹜文楷 webfont（非阻塞样式表，加载失败自动回退系统楷体） -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.7.0/style.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.7.0/style.css"></noscript>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- 初始加载动效：内容渲染完成后由 JS 隐藏 -->
+  <div id="loader" class="loader" aria-hidden="true">
+    <div class="loader-heart">❤</div>
+    <div class="loader-text">正在加载我们的故事…</div>
+  </div>
+
+  <!-- 所有 section 由 js/app.js 依据 data/content.json 动态生成 -->
+  <main id="app"></main>
+
+  <script src="js/app.js" defer></script>
+</body>
+</html>
