@@ -319,6 +319,29 @@ img { max-width: 100%; }
 }
 .btn-add:hover { background: #fff; }
 
+/* 页与页之间的「在此添加一页」分隔按钮（比底部追加按钮更轻量） */
+.btn-insert {
+  display: block;
+  width: 100%;
+  margin: -4px 0 10px;
+  padding: 6px;
+  border: 1px dashed #f3d9e8;
+  border-radius: 10px;
+  background: transparent;
+  color: #cf9ab4;
+  font-family: inherit;
+  font-size: 12px;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: background .15s ease, color .15s ease, border-color .15s ease;
+}
+.btn-insert:hover,
+.btn-insert:active {
+  background: #fff;
+  border-color: #f0bcd4;
+  color: #c2557f;
+}
+
 .foot-hint {
   margin: 4px 0 0;
   text-align: center;
