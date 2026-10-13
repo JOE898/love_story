@@ -1,0 +1,70 @@
+{
+  "startDate": "2024-01-19",
+  "hero": {
+    "image": "images/hero.jpg",
+    "badge": "2024.01.19 ❤",
+    "bigNumber": "999",
+    "title": "我们的第 999 天",
+    "subtitle": "每一天，都因为是你而值得纪念",
+    "scrollHint": "向下滑动，开启我们的故事"
+  },
+  "pages": [
+    {
+      "id": "meet",
+      "type": "story",
+      "date": "2024.01.19",
+      "title": "初次相识",
+      "text": "故事的开始总是刚刚好。那天我们第一次见面，谁也没想到，一次普通的相遇，会变成往后余生的每一天。",
+      "image": "images/p2.jpg"
+    },
+    {
+      "id": "first-date",
+      "type": "story",
+      "date": "",
+      "title": "第一次约会",
+      "text": "紧张又期待的一天。出门前换了三套衣服，见面时还要假装淡定。后来才知道，原来你也在来的路上偷偷练习了很多句话。",
+      "image": "images/p3.jpg"
+    },
+    {
+      "id": "first-trip",
+      "type": "story",
+      "date": "",
+      "title": "第一次旅行",
+      "text": "第一次一起去看远方的风景。地图上陌生的城市，因为有你在身边，变成了这世界上最温柔的地方。",
+      "image": "images/p4.jpg"
+    },
+    {
+      "id": "first-birthday",
+      "type": "story",
+      "date": "",
+      "title": "第一次一起过生日",
+      "text": "许愿的时候偷偷看了你一眼。其实愿望特别简单：希望以后的每一个生日，吹灭蜡烛时，身边的人都是你。",
+      "image": "images/p5.jpg"
+    },
+    {
+      "id": "first-newyear",
+      "type": "story",
+      "date": "",
+      "title": "一起的第一个新年",
+      "text": "跨年的烟花很美，但不及回头看你的那一眼。新的一年，和往后的每一年，都请多多指教。",
+      "image": "images/p6.jpg"
+    },
+    {
+      "id": "future",
+      "type": "story",
+      "date": "",
+      "title": "未来宣言",
+      "text": "999 天只是一个小小的开始。下一个 999 天，第 1999 天，第 2999 天……依然是你，只好是你，必须是你。",
+      "image": "images/p7.jpg"
+    },
+    {
+      "id": "counter",
+      "type": "counter",
+      "date": "",
+      "title": "未完待续",
+      "text": "我们的故事每天都在更新。今天，是我们在一起的第——",
+      "image": "images/p8.jpg"
+    }
+  ],
+  "footer": "❤ 2024.01.19 起 · 每一天都算数"
+}
