@@ -15,7 +15,7 @@
       "date": "2024.01.19",
       "title": "初次相识",
       "text": "故事的开始总是刚刚好。那天我们第一次见面，谁也没想到，一次普通的相遇，会变成往后的每一天。",
-      "image": "images/p2.jpg"
+      "image": "images/u20261013-154820-872d.jpg"
     },
     {
       "id": "first-date",
@@ -23,37 +23,69 @@
       "date": "2024.1.24",
       "title": "第一次约会",
       "text": "在扬名广场，吃客语，然后逛扬名广场，你很害羞，说我一直看着你说话很心动",
-      "image": "images/p3.jpg"
+      "image": "images/u20261013-154830-nwuk.jpg"
     },
     {
       "id": "first-trip",
       "type": "story",
-      "date": "",
-      "title": "第一次旅行",
-      "text": "第一次一起去看远方的风景。地图上陌生的城市，因为有你在身边，变成了这世界上最温柔的地方。",
-      "image": "images/p4.jpg"
-    },
-    {
-      "id": "first-birthday",
-      "type": "story",
-      "date": "",
-      "title": "第一次一起过生日",
-      "text": "许愿的时候偷偷看了你一眼。其实愿望特别简单：希望以后的每一个生日，吹灭蜡烛时，身边的人都是你。",
-      "image": "images/p5.jpg"
+      "date": "2024.1.30",
+      "title": "第二次约会",
+      "text": "在唐家古镇，第一次一起拍照，一起喝糖水，你还摸了我的头",
+      "image": "images/u20261013-154940-ldt0.jpg"
     },
     {
       "id": "first-newyear",
       "type": "story",
-      "date": "",
-      "title": "一起的第一个新年",
-      "text": "跨年的烟花很美，但不及回头看你的那一眼。新的一年，和往后的每一年，都请多多指教。",
-      "image": "images/p6.jpg"
+      "date": "2024.2.24",
+      "title": "第一次旅行",
+      "text": "在江门，我们逛了狂飙打卡地，还一起睡觉",
+      "image": "images/u20261013-155200-xixx.jpg"
+    },
+    {
+      "id": "first-birthday",
+      "type": "story",
+      "date": "2024.3.24",
+      "title": "第一次一起过生日",
+      "text": "见到你的好组员们，大家在ktv玩得很开心，都羡慕我俩",
+      "image": "images/u20261013-155102-dt0h.jpg"
+    },
+    {
+      "id": "page-1791878167798",
+      "type": "story",
+      "date": "2024.4.5",
+      "title": "第一次去桂林旅行",
+      "text": "好可爱的菲宝，虽然天气不佳，但是每次和你旅行都很开心，有你真好",
+      "image": "images/u20261013-155708-k4hp.jpg"
+    },
+    {
+      "id": "page-1791878170933",
+      "type": "story",
+      "date": "2025.1.11",
+      "title": "第一次去香港",
+      "text": "做了一次港风情侣，宝贝还提前准备了服装",
+      "image": "images/u20261013-155821-1sbh.jpg"
+    },
+    {
+      "id": "page-1791878234788",
+      "type": "story",
+      "date": "2025.6.13",
+      "title": "第一次去看草原",
+      "text": "来到夏天的呼市，留下我们爱的故事",
+      "image": "images/u20261013-155856-ffgw.jpg"
+    },
+    {
+      "id": "page-1791878342401",
+      "type": "story",
+      "date": "2025.12.27",
+      "title": "第一次看雪",
+      "text": "宝贝每次旅行都夸我安排周到，正是在一次次的共同记忆里更坚信彼此",
+      "image": "images/u20261013-160014-iw0g.jpg"
     },
     {
       "id": "future",
       "type": "story",
       "date": "",
-      "title": "未来宣言",
+      "title": "",
       "text": "999 天只是一个小小的开始。下一个 999 天，第 1999 天，第 2999 天……依然是你，只好是你，必须是你。",
       "image": "images/p7.jpg"
     },
