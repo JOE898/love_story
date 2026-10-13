@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <title>管理后台 · 我们的 999 天</title>
+  <link rel="stylesheet" href="css/admin.css">
+  <script src="js/admin.js" defer></script>
+</head>
+<body>
+
+  <!-- ========== 登录页 ========== -->
+  <div class="login-wrap" id="loginView">
+    <form class="login-card" id="loginForm" autocomplete="off">
+      <h1 class="login-title">我们的 999 天 · 管理后台</h1>
+      <p class="login-sub">编辑内容并一键发布到 GitHub Pages</p>
+
+      <label class="field">GitHub Token
+        <input type="password" id="tokenInput" placeholder="ghp_ / github_pat_ 开头"
+               autocomplete="new-password" spellcheck="false">
+      </label>
+
+      <div class="field-row">
+        <label class="field">Owner
+          <input type="text" id="ownerInput" placeholder="用户名" spellcheck="false">
+        </label>
+        <label class="field">Repo
+          <input type="text" id="repoInput" placeholder="仓库名" spellcheck="false">
+        </label>
+      </div>
+
+      <label class="chk">
+        <input type="checkbox" id="rememberChk" checked> 记住我（Token 保存在本机浏览器）
+      </label>
+
+      <button type="submit" class="btn btn-primary btn-block" id="loginBtn">登 录</button>
+
+      <p class="login-note">Token 只保存在本机浏览器，仅用于直连 GitHub API；
+        推荐使用 Fine-grained Token（仅授权本仓库、Contents 读写权限）。</p>
+    </form>
+  </div>
+
+  <!-- ========== 编辑器 ========== -->
+  <div id="editorView" hidden>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="topbar-info">
+          <span class="repo-label" id="repoLabel"></span>
+          <span class="status" id="statusText">未登录</span>
+        </div>
+        <div class="topbar-actions">
+          <a class="btn btn-ghost" id="siteLink" target="_blank" rel="noopener" hidden>查看站点</a>
+          <button type="button" class="btn btn-ghost" id="logoutBtn">登出</button>
+          <button type="button" class="btn btn-primary" id="publishBtn" disabled>发布上线</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="editor loading" id="editorMain">
+
+      <!-- 卡片 1：封面 hero -->
+      <section class="card">
+        <h2 class="card-title">封面</h2>
+        <div id="heroPreview"></div>
+        <label class="field">角标 badge
+          <input type="text" id="heroBadge" placeholder="如 2024.01.19 ❤">
+        </label>
+        <label class="field">大数字 bigNumber
+          <input type="text" id="heroBigNumber" placeholder="如 999">
+        </label>
+        <label class="field">主标题
+          <input type="text" id="heroTitle">
+        </label>
+        <label class="field">副标题
+          <input type="text" id="heroSubtitle">
+        </label>
+        <label class="field">滑动提示 scrollHint
+          <input type="text" id="heroScrollHint">
+        </label>
+      </section>
+
+      <!-- 卡片 2：纪念日 -->
+      <section class="card">
+        <h2 class="card-title">纪念日</h2>
+        <label class="field">在一起的开始日期
+          <input type="date" id="startDateInput">
+        </label>
+        <p class="day-preview">已在一起 <b id="dayCount">-</b> 天</p>
+      </section>
+
+      <!-- 卡片 3：页面列表 -->
+      <section class="card">
+        <h2 class="card-title">页面列表 <span class="card-sub">每屏一张卡片，从上到下依次展示</span></h2>
+        <div id="pagesList"></div>
+        <button type="button" class="btn-add" id="addPageBtn">＋ 添加一页</button>
+      </section>
+
+      <!-- 卡片 4：页脚 -->
+      <section class="card">
+        <h2 class="card-title">页脚</h2>
+        <label class="field">页脚文字
+          <input type="text" id="footerInput">
+        </label>
+      </section>
+
+      <p class="foot-hint">修改后点右上角「发布上线」，约 1 分钟后访客可见。</p>
+    </main>
+  </div>
+
+  <!-- 隐藏的选图输入框 + Toast 容器 -->
+  <input type="file" id="imgInput" accept="image/*" hidden>
+  <div class="toast-box" id="toastBox"></div>
+
+</body>
+</html>
