@@ -445,6 +445,11 @@
     var html = '';
     for (var i = 0; i < total; i++) {
       var p = state.data.pages[i];
+      // 页与页之间的「在此添加一页」分隔按钮（第 1 屏之前不用，底部另有追加按钮）
+      if (i > 0) {
+        html += '<button type="button" class="btn-insert" data-act="insert" data-idx="' + i +
+          '" title="在这两页之间插入一页">＋ 在此添加一页</button>';
+      }
       html += '<div class="page-card" data-idx="' + i + '">' +
         '<div class="page-head">' +
           '<span class="page-num">第 ' + (i + 1) + ' 屏' +
@@ -523,8 +528,9 @@
     toast('已删除，发布后生效', 'info');
   }
 
-  function addPage() {
-    state.data.pages.push({
+  // 在指定位置插入一张空白页（分隔按钮「＋ 在此添加一页」/ 底部追加按钮共用）
+  function insertPageAt(idx) {
+    state.data.pages.splice(idx, 0, {
       id: 'page-' + Date.now(),
       type: 'story',
       date: '',
@@ -535,12 +541,17 @@
     markDirty();
     renderPages();
     var cards = pagesList.querySelectorAll('.page-card');
-    var last = cards[cards.length - 1];
-    if (last) {
-      last.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      var t = last.querySelector('.p-title');
+    var card = cards[idx];
+    if (card) {
+      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      var t = card.querySelector('.p-title');
       if (t) t.focus();
     }
+    toast('已添加，填写内容后记得发布', 'info');
+  }
+
+  function addPage() {
+    insertPageAt(state.data.pages.length);
   }
 
   /* ============ 图片选择与压缩 ============ */
@@ -772,12 +783,17 @@
       markDirty();
     });
 
-    // 页面列表：按钮（更换图片 / 上移 / 下移 / 删除）
+    // 页面列表：按钮（在此插入 / 更换图片 / 上移 / 下移 / 删除）
     pagesList.addEventListener('click', function (e) {
       var btn = (e.target.closest) ? e.target.closest('button') : null;
       if (!btn || !pagesList.contains(btn)) return;
       var act = btn.getAttribute('data-act');
       if (!act) return;
+      // 插入按钮不在 page-card 内，先于卡片查找处理
+      if (act === 'insert') {
+        insertPageAt(Number(btn.getAttribute('data-idx')));
+        return;
+      }
       var card = btn.closest('.page-card');
       if (!card) return;
       var idx = Number(card.getAttribute('data-idx'));
